@@ -1930,9 +1930,13 @@ static const struct {
 } version_headers[] = {
   /* cph - we don't need a new version_header for prboom_3_comp/v2.1.1, since
    *  the file format is unchanged. */
-  { prboom_3_compatibility, "PrBoom %d", 210},
-  { prboom_5_compatibility, "PrBoom %d", 211},
-  { prboom_6_compatibility, "PrBoom %d", 212}
+  /* [XA] despite the above comment, these numbers didn't match the real ones... :P */
+  { prboom_2_compatibility, "PrBoom %d", 210},
+  { prboom_3_compatibility, "PrBoom %d", 211},
+  { prboom_4_compatibility, "PrBoom %d", 212},
+  { prboom_5_compatibility, "PrBoom %d", 213},
+  { prboom_6_compatibility, "PrBoom %d", 214},
+  { prboom_7_compatibility, "PrBoom %d", 215}
   //e6y
   ,{ doom_12_compatibility,  "PrBoom %d", 100}
   ,{ doom_1666_compatibility,"PrBoom %d", 101}
@@ -2094,7 +2098,7 @@ void G_DoLoadGame(void)
   }
 
   compatibility_level = (savegame_compatibility >= prboom_4_compatibility) ? *save_p : savegame_compatibility;
-  if (savegame_compatibility < prboom_6_compatibility)
+  if (savegame_compatibility < prboom_7_compatibility)
     compatibility_level = map_old_comp_levels[compatibility_level];
   save_p++;
 
@@ -3201,9 +3205,17 @@ void G_BeginRecording (void)
 				     v = 214; 
 				     longtics = 1;
 				     break;
+        case prboom_7_compatibility:
+				     v = 215; 
+				     longtics = 1;
+				     break;
         default: I_Error("G_BeginRecording: PrBoom compatibility level unrecognised?");
       }
       *demo_p++ = v;
+      
+      if (v >= 215) {
+        // [XA] TODO: write feature-strings if v >= 215
+      }
     }
 
     // signature
@@ -3523,7 +3535,7 @@ const byte* G_ReadDemoHeaderEx(const byte *demo_p, size_t size, unsigned int par
   // BOOM's demoversion starts from 200
   if (!((demover >=   0  && demover <=   4) ||
         (demover >= 104  && demover <= 111) ||
-        (demover >= 200  && demover <= 214)))
+        (demover >= 200  && demover <= 215)))
   {
     I_Error("G_ReadDemoHeader: Unknown demo format %d.", demover);
   }
@@ -3617,6 +3629,10 @@ const byte* G_ReadDemoHeaderEx(const byte *demo_p, size_t size, unsigned int par
     }
   else    // new versions of demos
     {
+      if (demover >= 215) {
+        // [XA] TODO: read feature-strings if demover is 215 or higher
+      }
+
       demo_p += 6;               // skip signature;
       switch (demover) {
       case 200: /* BOOM */
@@ -3675,7 +3691,13 @@ const byte* G_ReadDemoHeaderEx(const byte *demo_p, size_t size, unsigned int par
         longtics = 1;
 	demo_p++;
 	break;
+      case 215:
+	compatibility_level = prboom_7_compatibility;
+        longtics = 1;
+	demo_p++;
+	break;
       }
+
       //e6y: check for overrun
       if (CheckForOverrun(header_p, demo_p, size, 5, failonerror))
         return NULL;

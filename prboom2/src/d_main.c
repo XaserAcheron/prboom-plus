@@ -1838,6 +1838,7 @@ static void D_DoomMainSetup(void)
 	  {
 		  const unsigned char * lump = (const unsigned char *)W_CacheLumpNum(p);
 		  ParseUMapInfo(lump, W_LumpLength(p), I_Error);
+      // [XA] TODO: set a flag that UMAPINFO has been used, then write the feature-string to the demo header
 	  }
   }
 

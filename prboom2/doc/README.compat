@@ -29,7 +29,8 @@ Number	Name			Description
 14	prboom_3_compatibility	PrBoom v2.1.1-2.2.6
 15	prboom_4_compatibility	PrBoom v2.3.x
 16	prboom_5_compatibility	PrBoom v2.4.0
-17	prboom_6_compatibility	Current PrBoom
+17	prboom_6_compatibility	PrBoom v2.5.x
+18	prboom_7_compatibility	Current PrBoom
 
 You can cycle through the compatibility levels in the game using the TNTCOMP
 cheat. There's also the default_compatibility_level config file option, and

@@ -262,7 +262,8 @@ Number	Name				 Description
 14	prboom_3_compatibility		 Emulates PrBoom v2.1.1-2.2.6
 15	prboom_4_compatibility		 Emulates PrBoom v2.3.x
 16	prboom_5_compatibility		 Emulates PrBoom v2.4.0
-17	prboom_6_compatibility		 Latest PrBoom-plus
+17	prboom_6_compatibility		 Emulates PrBoom v2.5.x
+18	prboom_7_compatibility		 Latest PrBoom-plus (w/UMAPINFO)
 -1	default_compatibility_level	 Current Prboom-plus
 
 Here's a quick summary of the most important ones for recording:

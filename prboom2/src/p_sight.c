@@ -567,7 +567,7 @@ dboolean P_CrossSubsector_PrBoom(int num)
     { // crosses a two sided line
       /* cph 2006/07/15 - oops, we missed this in 2.4.0 & .1;
        *  use P_InterceptVector2 for those compat levels only. */ 
-      fixed_t frac = (compatibility_level == prboom_5_compatibility || compatibility_level == prboom_6_compatibility) ?
+      fixed_t frac = (compatibility_level >= prboom_5_compatibility) ?
 		      P_InterceptVector2(&los.strace, &divl) : 
 		      P_InterceptVector(&los.strace, &divl);
 
